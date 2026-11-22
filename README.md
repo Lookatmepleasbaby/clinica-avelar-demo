@@ -25,3 +25,5 @@ npm run dev
 ```
 
 A marca, a profissional, o endereço e os horários foram criados para este projeto. Os retratos e ambientes foram gerados com ImageGen para representar a identidade visual da demo.
+
+

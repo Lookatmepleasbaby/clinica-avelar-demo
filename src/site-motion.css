@@ -1,0 +1,136 @@
+:root {
+  --motion-out: cubic-bezier(.16, 1, .3, 1);
+  --motion-cut: cubic-bezier(.7, 0, .18, 1);
+}
+
+html[data-motion="full"] { scroll-behavior: smooth; }
+
+@keyframes hero-line {
+  from { transform: translate3d(0, 113%, 0); opacity: .5; }
+  to { transform: translate3d(0, 0, 0); opacity: 1; }
+}
+@keyframes editorial-in {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes hero-window {
+  from { clip-path: inset(0 0 0 100%); }
+  to { clip-path: inset(0); }
+}
+@keyframes hero-image-settle {
+  from { transform: translate3d(3.5%, 0, 0) scale(1.115); }
+  to { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+html[data-motion="full"] .hero-kicker { animation: editorial-in .65s var(--motion-out) .07s both; }
+html[data-motion="full"] .title-line > * { animation: hero-line .92s var(--motion-out) .11s both; }
+html[data-motion="full"] .title-line:nth-child(2) > * { animation-delay: .24s; }
+html[data-motion="full"] .hero-summary { animation: editorial-in .73s var(--motion-out) .4s both; }
+html[data-motion="full"] .hero-actions > a { animation: editorial-in .67s var(--motion-out) .51s both; }
+html[data-motion="full"] .hero-actions > a:nth-child(2) { animation-delay: .59s; }
+html[data-motion="full"] .hero-actions:focus-within > a { animation: none; }
+html[data-motion="full"] .hero-image { animation: hero-window 1.05s var(--motion-cut) .045s both; }
+html[data-motion="full"] .hero-image img { animation: hero-image-settle 1.46s var(--motion-out) .065s both; }
+html[data-motion="full"] .hero-media figcaption { animation: editorial-in .55s var(--motion-out) .8s both; }
+
+@media (max-width: 740px) {
+  @keyframes hero-window { from { clip-path: inset(100% 0 0); } to { clip-path: inset(0); } }
+  @keyframes hero-image-settle {
+    from { transform: translate3d(0, 2.5%, 0) scale(1.095); }
+    to { transform: translate3d(0, 0, 0) scale(1); }
+  }
+}
+
+html[data-motion="full"] [data-reveal="rise"] {
+  transition: opacity .68s var(--motion-out), transform .8s var(--motion-out);
+  transition-delay: var(--delay, 0ms);
+}
+html[data-motion="full"] [data-reveal="rise"][data-reveal-state="waiting"]:not(:focus-within) {
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+}
+html[data-motion="full"] [data-reveal="mask"] {
+  clip-path: inset(0);
+  transition: clip-path .94s var(--motion-cut);
+  transition-delay: var(--delay, 0ms);
+}
+html[data-motion="full"] [data-reveal="mask"][data-reveal-state="waiting"]:not(:focus-within) {
+  clip-path: inset(10% 0 90%);
+}
+html[data-motion="full"] [data-reveal]:focus-within { transition: none; }
+
+@media (min-width: 860px) and (min-height: 680px) {
+  html[data-motion="full"] .profile-media { position: sticky; top: 6.25rem; }
+  html[data-motion="full"] .profile-chapter { min-height: clamp(10rem, 22vh, 14.5rem); }
+}
+
+@supports (view-timeline-name: --profile-scroll) {
+  @media (min-width: 860px) and (min-height: 680px) {
+    html[data-motion="full"] .profile { view-timeline-name: --profile-scroll; }
+    html[data-motion="full"] .profile-media img {
+      animation: portrait-drift linear both;
+      animation-timeline: --profile-scroll;
+      animation-range: cover 12% cover 79%;
+    }
+  }
+}
+@keyframes portrait-drift {
+  from { transform: scale(1.1) translateY(-2.8%); }
+  to { transform: scale(1.1) translateY(2.8%); }
+}
+
+.treatment-item { position: relative; }
+.treatment-item::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 1px;
+  background: #936855;
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+.treatment-item[data-active="true"]::before { transform: scaleX(1); }
+.treatment-item[data-active="true"] .treatment-no { color: #805944; }
+html[data-motion="full"] .treatment-item::before { transition: transform .65s var(--motion-out); }
+html[data-motion="full"] .treatment-toggle::after { transition: transform .3s var(--motion-out); }
+html[data-motion="full"] .treatment-panel { transition: grid-template-rows .48s var(--motion-out), visibility .48s; }
+html[data-motion="full"] .treatment-body > * { transition: opacity .22s ease, transform .38s var(--motion-out); }
+html[data-motion="full"] .treatment-item:not([data-active="true"]) .treatment-body > * {
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+}
+html[data-motion="full"] .treatment-item[data-active="true"] .treatment-body > * { transition-delay: .10s; }
+
+.treatment-media { --photo-closed: inset(0 0 0 100%); --photo-travel: 3%; isolation: isolate; }
+.treatment-media[data-direction="back"] { --photo-closed: inset(0 100% 0 0); --photo-travel: -3%; }
+html[data-motion="full"] .treatment-photo[data-previous="true"] { opacity: 1; z-index: 1; }
+html[data-motion="full"] .treatment-media[data-transitioned="true"] .treatment-photo[data-current="true"] {
+  animation: treatment-cut .68s var(--motion-cut) both;
+}
+html[data-motion="full"] .treatment-media[data-transitioned="true"] .treatment-photo[data-current="true"] img {
+  animation: treatment-settle .88s var(--motion-out) both;
+}
+html[data-motion="full"] .treatment-media[data-transitioned="true"] figcaption { animation: editorial-in .36s var(--motion-out) .33s both; }
+@keyframes treatment-cut {
+  from { opacity: .84; clip-path: var(--photo-closed); }
+  to { opacity: 1; clip-path: inset(0); }
+}
+@keyframes treatment-settle {
+  from { transform: translate3d(var(--photo-travel), 0, 0) scale(1.075); }
+  to { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+html[data-motion="full"] .journal-image img { transition: transform .68s var(--motion-out); }
+html[data-motion="full"] .journal-card button:hover img,
+html[data-motion="full"] .journal-card button:focus-visible img { transform: scale(1.065); }
+html[data-motion="full"] .journal-dialog[open] { animation: reading-in .42s var(--motion-out) both; }
+html[data-motion="full"] .journal-dialog[open]::backdrop { animation: backdrop-in .34s ease-out both; }
+@keyframes reading-in {
+  from { opacity: 0; transform: translate3d(0, 1.25rem, 0); clip-path: inset(9% 0 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); clip-path: inset(0); }
+}
+@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+
+
