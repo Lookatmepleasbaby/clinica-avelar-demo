@@ -271,7 +271,7 @@ function Contact() {
           {submitted && <p className="booking-feedback" role="status">Solicitação simulada. Nenhum dado foi enviado.</p>}
         </div>
         <div className="contact-details">
-          <div><MapPin size={22} aria-hidden="true" /><div><h3>Visite a clínica</h3><address>{address}<br />{region}</address><p>Endereço ilustrativo.</p></div></div>
+          <div><MapPin size={22} aria-hidden="true" /><div><h3>Localização</h3><address>{address}<br />{region}</address></div></div>
           <div>
             <Clock3 size={22} aria-hidden="true" />
             <div>
@@ -309,7 +309,7 @@ export function App() {
       <footer className="site-footer">
         <div className="wrap footer-in">
           <a href="#inicio" className="footer-brand">Lívia Avelar<span>Clínica de estética</span></a>
-          <p>Projeto de portfólio · Dados e imagens fictícios</p>
+          <p>Projeto de portfólio</p>
         </div>
       </footer>
     </>
